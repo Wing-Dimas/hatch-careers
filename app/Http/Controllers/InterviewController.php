@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class InterviewController extends Controller
 {
@@ -13,7 +14,7 @@ class InterviewController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render("");
     }
 
     /**

@@ -16,7 +16,12 @@ class JobController extends Controller
     public function index()
     {
         $jobs = Job::all();
-        return Inertia::render("Jobs", compact("jobs"));
+        $listIndustry = Job::distinct()->get(["industry"]);
+        $listJobType = Job::distinct()->get(["job_type"]);
+        $listStatus = Job::distinct()->get(["status"]);
+        $listCreatedBy = Job::distinct()->get(["created_by"]);
+
+        return Inertia::render("Jobs", compact("jobs", "listIndustry", "listJobType", "listStatus", "listCreatedBy"));
     }
 
     /**
@@ -26,7 +31,7 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -37,7 +42,22 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $job = $request->validate([
+            "title" => "required",
+            "description" => "required",
+            "skill" => "required",
+            "job_type" => "required",
+            "qualifications" => "required",
+            "salary" => "required",
+            "location" => "required",
+            "job_type" => "required",
+            "industry" => "required",
+            "close_on" => "required",
+            "status" => "required",
+            "created_by" => "required"
+        ]);
+        Job::create($job);
+        return redirect()->back();
     }
 
     /**
@@ -57,9 +77,9 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Job $job)
     {
-        //
+        return response()->json($job);
     }
 
     /**
@@ -69,9 +89,23 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Job $job)
     {
-        //
+        $request->validate([
+            "title" => "required",
+            "description" => "required",
+            "skill" => "required",
+            "job_type" => "required",
+            "qualifications" => "required",
+            "salary" => "required",
+            "location" => "required",
+            "job_type" => "required",
+            "industry" => "required",
+            "close_on" => "required",
+            "status" => "required",
+        ]);
+        $job->update($request->all());
+        return redirect()->back();
     }
 
     /**
@@ -80,8 +114,9 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Job $job)
     {
-        //
+        $job->delete();
+        return redirect()->back();
     }
 }

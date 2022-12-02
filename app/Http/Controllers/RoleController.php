@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class RoleController extends Controller
 {
@@ -12,8 +14,9 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $roles = Role::all();
+        return Inertia::render("Roles", compact("roles"));
     }
 
     /**
@@ -34,7 +37,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = $request->validate([
+            "name" => "required"
+        ]);
+        Role::create($role);
+        return redirect()->back();
     }
 
     /**
@@ -54,9 +61,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        return response()->json($role);
     }
 
     /**
@@ -66,9 +73,14 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            "name" => "required"
+        ]);
+
+        $role->update($request->all());
+        return redirect()->back();
     }
 
     /**
@@ -77,8 +89,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return redirect()->back();
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,8 +46,21 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::get('/dev', function () {
         return Inertia::render('Dev');
     })->name('dev');
+    
+    // ROLES
+    Route::get("/roles", [RoleController::class, "index"])->name("roles");
+    Route::post("/roles", [RoleController::class, "store"]);
+    Route::get("/roles/{role}/edit", [RoleController::class, "edit"])->name("roles.edit");
+    Route::put("/roles/{role}", [RoleController::class, "update"])->name("roles.update");
+    Route::delete("/roles/{role}", [RoleController::class, "destroy"])->name("roles.destroy");
 
+
+    // JOBS
     Route::get('/jobs', [JobController::class, "index"])->name('jobs');
+    Route::post('/jobs', [JobController::class, "store"]);
+    Route::get('/jobs/{job}/edit', [JobController::class, "edit"])->name("jobs.edit");
+    Route::put('/jobs/{job}', [JobController::class, "update"])->name("jobs.update");
+    Route::delete('/jobs/{job}', [JobController::class, "destroy"])->name("jobs.destroy");
 
     Route::get('/applicants', function () {
         return Inertia::render('Applicants');
@@ -55,10 +69,6 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::get('/users', function () {
         return Inertia::render('Users');
     })->name('users');
-    
-    Route::get('/roles', function () {
-        return Inertia::render('Roles');
-    })->name('roles');
 });
 
 

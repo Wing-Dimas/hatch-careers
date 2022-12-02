@@ -5,17 +5,27 @@
 @tailwind utilities;
 
 * {
-    font-family: "Quicksand", sans-serif;
-    scroll-behavior: smooth;
+  font-family: "Quicksand", sans-serif;
+  scroll-behavior: smooth;
 }
 
 .rdt_Table
-    .rdt_TableHead
-    .rdt_TableHeadRow
-    .rdt_TableCol
-    .rdt_TableCol_Sortable
-    .hbotQl {
-    overflow: visible;
-    white-space: initial;
-    text-overflow: initial;
+  .rdt_TableHead
+  .rdt_TableHeadRow
+  .rdt_TableCol
+  .rdt_TableCol_Sortable
+  .hbotQl {
+  overflow: visible;
+  white-space: initial;
+  text-overflow: initial;
+}
+
+/* Detail CATALOG */
+div.detail-catalog ol {
+  list-style-type: decimal;
+  padding-left: 12px;
+}
+
+div.detail-catalog ul {
+  list-style-type: circle;
 }

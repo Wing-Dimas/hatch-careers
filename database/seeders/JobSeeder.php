@@ -31,7 +31,7 @@ class JobSeeder extends Seeder
         ]);
         Job::create([
             'title' => "System Business Analyst",
-            'industry' => "finance",
+            'industry' => "marketing",
             'job_type' => "full time",
             'status' => "close",
             'location' => "surabaya",

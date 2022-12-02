@@ -37,7 +37,7 @@ or
 Install dependency js
 
 ```bash
-  npm install
+  npm install --legacy-peer-deps
 
 ```
 
