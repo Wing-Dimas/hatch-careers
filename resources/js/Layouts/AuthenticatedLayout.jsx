@@ -15,8 +15,6 @@ import {
 } from "@tabler/icons";
 
 export default function Authenticated({ auth, header, children }) {
-  // const [showingNavigationDropdown, setShowingNavigationDropdown] =
-  //     useState(false);
   const [hideSidebar, setHideSidebar] = useState(false);
   const fullScreen = useFullScreenHandle();
 

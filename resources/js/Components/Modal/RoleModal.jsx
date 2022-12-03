@@ -29,7 +29,7 @@ const customStyles = {
 
 Modal.setAppElement("body");
 
-const JobModal = ({ modal, setModal, mode, setMode, id }) => {
+const RoleModal = ({ modal, setModal, mode, setMode, id }) => {
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -78,11 +78,11 @@ const JobModal = ({ modal, setModal, mode, setMode, id }) => {
       }}
     >
       <h2 className="p-4 text-xl font-medium border-b-2 border-b-[#dedede]">
-        {mode == "edit" ? "Edit Role" : "Create New Job"}
+        {mode == "edit" ? "Edit Role" : "Create New Role"}
       </h2>
       <div className="mt-4">
         <div className="grid gap-3 grid-cols-1">
-          <label htmlFor="location" className="text-sm font-bold">
+          <label htmlFor="name" className="text-sm font-bold">
             Name
           </label>
           <input
@@ -115,4 +115,4 @@ const JobModal = ({ modal, setModal, mode, setMode, id }) => {
   );
 };
 
-export default JobModal;
+export default RoleModal;

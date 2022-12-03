@@ -111,7 +111,7 @@ export default function Roles(props) {
         </h2>
       }
     >
-      <Head title="Jobs" />
+      <Head title="Roles" />
 
       <div className="py-6 mx-8 max-w-7xl sm:px-6 lg:px-8 bg-[#fff]">
         <div className="flex justify-end">
