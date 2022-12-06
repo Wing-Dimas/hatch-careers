@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RoleController;
@@ -69,9 +70,16 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::put('/jobs/{job}', [JobController::class, "update"])->name("jobs.update");
     Route::delete('/jobs/{job}', [JobController::class, "destroy"])->name("jobs.destroy");
 
-    Route::get('/applicants', function () {
-        return Inertia::render('Applicants');
-    })->name('applicants');
+    // APPLICANTS
+    Route::get('/applicants', [ApplicantController::class, "index"])->name('applicants');
+    Route::get('applicants/{applicant}', [ApplicantController::class, "show"])->name("applicants.show");
+    Route::delete('/applicants/{applicant}/delete', [ApplicantController::class, "destroy"])->name('applicants.destroy');
+    Route::get("/applicants/detail_interviews/{interview}", [ApplicantController::class, "detailInterview"])->name("applicants.detailInterview");
+    Route::get("/applicants/create/{applicant}", [ApplicantController::class, "createSchedule"])->name("applicants.create.schedule");
+    Route::post("/applicants/store/{interview}", [ApplicantController::class, "storeSchedule"])->name("applicants.store.schedule");
+    Route::get("/applicants/show/{applicant}", [ApplicantController::class, "showHistorySchedule"])->name("applicants.show.schedule");
+    Route::put("/applicants/{interview}/update/interview",[ApplicantController::class, "update"])->name("applicants.update.interview");
+    Route::put("/applicants/{detailInterview}/detail_interviews", [ApplicantController::class, "updateDetailInterview"])->name("applicants.update.detailInterview");
     
 });
 

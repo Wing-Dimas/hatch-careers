@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->enum("section", ['interview 1', 'interview 2', 'exam 1', 'exam 2', 'RNF']);
             $table->dateTime("interview_date");
-            $table->enum("status", ['expired', 'progress', 'reschedule']);
+            $table->enum("status", ['expired', 'progress', 'reschedule', 'complete']);
             $table->foreignId("interview_id")->nullable()->constrained("interviews")->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });

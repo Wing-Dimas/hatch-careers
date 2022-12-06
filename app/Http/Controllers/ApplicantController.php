@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applicant;
+use App\Models\DetailInterview;
+use App\Models\Interview;
+use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class ApplicantController extends Controller
 {
@@ -13,7 +19,11 @@ class ApplicantController extends Controller
      */
     public function index()
     {
-        //
+        $applicants = Applicant::all();
+        $interviews = Interview::all();
+        $jobs = Job::all();
+        $detail_interviews = DetailInterview::all();
+        return Inertia::render("Applicants", compact("applicants", "interviews", "jobs","detail_interviews"));
     }
 
     /**
@@ -43,9 +53,28 @@ class ApplicantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Applicant $applicant)
     {
-        //
+        $data = DB::table('applicants')
+        ->select(
+            "applicants.*",
+            "title",
+            "interview_id",
+            "interview_date",
+            "section",
+            "interviews.created_at AS apply_date",
+            "salary",
+            "interviews.status AS status"
+        )
+        ->join('interviews', 'interviews.applicant_id', '=', 'applicants.id')
+        ->join('jobs', 'interviews.job_id', '=', 'jobs.id')
+        ->join('detail_interviews', 'interviews.id','detail_interviews.interview_id')
+        ->where('applicants.id', '=', $applicant->id)
+        ->orderBy("interview_date", "desc")
+        ->limit(1)
+        ->get();
+
+        return response()->json($data);
     }
 
     /**
@@ -66,9 +95,10 @@ class ApplicantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Interview $interview)
     {
-        //
+        $interview->update($request->all());
+        return redirect()->back();
     }
 
     /**
@@ -77,8 +107,53 @@ class ApplicantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Applicant $applicant)
     {
-        //
+        $applicant->delete();
+        return redirect()->back();
+    }
+
+    public function createSchedule(Applicant $applicant){
+        $data = DB::table('applicants')
+        ->select(
+            "title",
+            "name",
+        )
+        ->join('interviews', 'interviews.applicant_id', '=', 'applicants.id')
+        ->join('jobs', 'interviews.job_id', '=', 'jobs.id')
+        ->where('applicants.id', '=', $applicant->id)
+        ->get();
+
+        return response()->json($data);
+    }
+
+    public function storeSchedule(Request $request, Interview $interview){
+        $detailInterview = $request->validate([
+            "interview_date" => "required",
+            "section" => "required"
+        ]);
+        $detailInterview["status"] = "progress";
+        $detailInterview["interview_id"] = $interview->id;
+        DetailInterview::create($detailInterview);
+        return redirect()->back();
+    }
+
+    public function showHistorySchedule(Applicant $applicant){
+        $data = DB::table('applicants')
+        ->select(
+            "detail_interviews.*"
+        )
+        ->join('interviews', 'interviews.applicant_id', '=', 'applicants.id')
+        ->join('jobs', 'interviews.job_id', '=', 'jobs.id')
+        ->join('detail_interviews', 'interviews.id','detail_interviews.interview_id')
+        ->where('applicants.id', '=', $applicant->id)
+        ->get();
+
+        return response()->json($data);
+    }
+
+    public function updateDetailInterview(Request $request ,DetailInterview $detailInterview){
+        $detailInterview->update($request->all());
+        return redirect()->back();
     }
 }

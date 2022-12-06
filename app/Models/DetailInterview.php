@@ -14,7 +14,6 @@ class DetailInterview extends Model
         "interview_date",
         "status",
         "interview_id",
-        "status"
     ];
 
     protected $guarded = [
