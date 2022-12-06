@@ -59,22 +59,29 @@ export default function Applicants(props) {
     });
 
     if (interview) {
-      const detailInteriews = props.detail_interviews.filter((el) => {
+      const detailInterviews = props.detail_interviews.filter((el) => {
         return el.interview_id === interview.id;
       });
-      if (detailInteriews) {
-        detailInteriews.sort((a, b) => {
+      if (detailInterviews.length) {
+        detailInterviews.sort((a, b) => {
           return (
             new Date(b.interview_date).getTime() -
             new Date(a.interview_date).getTime()
           );
         });
-        const data = detailInteriews[0];
+        const data = detailInterviews[0];
         return {
           interview_id: interview.id,
           interview_status: interview.status,
           interview_date: data.interview_date,
           section: data.section,
+        };
+      } else {
+        return {
+          interview_id: interview.id,
+          interview_status: interview.status,
+          interview_date: undefined,
+          section: undefined,
         };
       }
     }

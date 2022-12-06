@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ApplicantSeeder::class);
+        // $this->call(ApplicantSeeder::class);
         $this->call(JobSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(InterviewSeeder::class);
+        // $this->call(InterviewSeeder::class);
     }
 }
