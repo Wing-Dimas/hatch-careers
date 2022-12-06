@@ -67,8 +67,6 @@ export default function Roles(props) {
               setModal(true);
             }}
           />
-          <Show />
-          <Share />
           <Delete
             onClick={() => {
               handleDelete(row.id);
