@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -24,6 +25,8 @@ use Inertia\Inertia;
 */
 
 Route::get("/", function (){return Inertia::render("Homepage", ["title" => "Homepage"]);});
+
+Route::post("/contact", [ContactController::class, "sendEmail"])->name("contact");
 
 Route::get("/job-list", [CatalogController::class, "index"]);
 

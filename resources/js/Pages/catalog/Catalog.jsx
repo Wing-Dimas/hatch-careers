@@ -4,6 +4,7 @@ import Navbar from "@/Navbar";
 import moment from "moment/moment";
 import { IconClockHour3, IconMapPin, IconPremiumRights } from "@tabler/icons";
 import parse from "html-react-parser";
+import Footer from "@/Components/Footer";
 
 const Catalog = (props) => {
   const jobs = props.jobs;
@@ -56,6 +57,8 @@ const Catalog = (props) => {
           </li>
         ))}
       </ul>
+
+      <Footer />
     </>
   );
 };
